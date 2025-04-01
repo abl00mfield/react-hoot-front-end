@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import * as hootService from "../../services/hootService"; //we could actually just import the show service
+import CommentForm from "../CommentForm/CommentForm";
 
 const HootDetails = (props) => {
   const [hoot, setHoot] = useState(null);
@@ -14,7 +15,10 @@ const HootDetails = (props) => {
     fetchHoot(); //this will run when the effect function runs
   }, [hootId]); //this happens anytime the hoodId changes
 
-  console.log("hoot state: ", hoot);
+  const handleAddComment = async (commentFormData) => {
+    console.log("Comment Form Data: ", commentFormData);
+  };
+
   if (!hoot) return <main>Loading...</main>; //show loading while Hoot is getting requested
   return (
     <main>
@@ -31,6 +35,7 @@ const HootDetails = (props) => {
       </section>
       <section>
         <h2>Comments</h2>
+        <CommentForm handleAddComment={handleAddComment} />
         {!hoot.comments.length && <p>There are no comments</p>}
         {hoot.comments.map((comment) => (
           <article key={comment._id}>
