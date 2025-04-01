@@ -24,4 +24,20 @@ const show = async (hootId) => {
   }
 };
 
-export { index, show }; //named export syntax used to export multiple functions from a module
+const create = async (hootFormData) => {
+  try {
+    const res = await fetch(BASE_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(hootFormData),
+    });
+    return res.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { index, show, create }; //named export syntax used to export multiple functions from a module

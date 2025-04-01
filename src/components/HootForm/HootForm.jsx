@@ -13,7 +13,7 @@ const HootForm = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Form Data", formData);
+    props.handleAddHoot(formData);
   };
 
   return (

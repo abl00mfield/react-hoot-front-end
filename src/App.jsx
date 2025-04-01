@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { Routes, Route } from "react-router";
+import { useNavigate } from "react-router";
 
 import NavBar from "./components/NavBar/NavBar";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
@@ -17,6 +18,7 @@ import * as hootService from "./services/hootService";
 const App = () => {
   const { user } = useContext(UserContext);
   const [hoots, setHoots] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAllHoots = async () => {
@@ -27,6 +29,12 @@ const App = () => {
     //only fetch hoots when a suer is logged in
   }, [user]); //because the effect depends on the user to run
 
+  const handleAddHoot = async (hootFormData) => {
+    const newHoot = await hootService.create(hootFormData);
+    setHoots([newHoot, ...hoots]);
+    navigate("/hoots");
+  };
+
   return (
     <>
       <NavBar />
@@ -35,7 +43,10 @@ const App = () => {
         {user ? (
           <>
             <Route path="/hoots" element={<HootList hoots={hoots} />} />
-            <Route path="/hoots/new" element={<HootForm />} />
+            <Route
+              path="/hoots/new"
+              element={<HootForm handleAddHoot={handleAddHoot} />}
+            />
             <Route path="/hoots/:hootId" element={<HootDetails />} />
           </>
         ) : (
