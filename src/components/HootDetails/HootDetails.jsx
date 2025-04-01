@@ -31,6 +31,20 @@ const HootDetails = (props) => {
       </section>
       <section>
         <h2>Comments</h2>
+        {!hoot.comments.length && <p>There are no comments</p>}
+        {hoot.comments.map((comment) => (
+          <article key={comment._id}>
+            <header>
+              <p>
+                {`${comment.author.username}
+                            ${new Date(
+                              comment.createdAt
+                            ).toLocaleDateString()}`}
+              </p>
+            </header>
+            <p>{comment.text}</p>
+          </article>
+        ))}
       </section>
     </main>
   );
