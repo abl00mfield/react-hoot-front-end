@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import { useParams, Link } from "react-router";
 import * as hootService from "../../services/hootService"; //we could actually just import the show service
 import CommentForm from "../CommentForm/CommentForm";
 
 const HootDetails = (props) => {
   const [hoot, setHoot] = useState(null);
   const { hootId } = useParams();
+  const { user } = useContext(UserContext); //accesses the user
 
   useEffect(() => {
     const fetchHoot = async () => {
@@ -34,6 +36,14 @@ const HootDetails = (props) => {
             {`${hoot.author.username} posted on
             ${new Date(hoot.createdAt).toLocaleDateString()}`}
           </p>
+          {hoot.author._id === user._id && (
+            <>
+              <Link to={`/hoots/${hootId}/edit`}>Edit</Link>
+              <button onClick={() => props.handleDeleteHoot(hootId)}>
+                Delete
+              </button>
+            </>
+          )}
         </header>
         <p>{hoot.text}</p>
       </section>
