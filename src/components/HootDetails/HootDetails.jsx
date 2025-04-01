@@ -1,0 +1,39 @@
+import { useState, useEffect } from "react";
+import { useParams } from "react-router";
+import * as hootService from "../../services/hootService"; //we could actually just import the show service
+
+const HootDetails = (props) => {
+  const [hoot, setHoot] = useState(null);
+  const { hootId } = useParams();
+
+  useEffect(() => {
+    const fetchHoot = async () => {
+      const hootData = await hootService.show(hootId);
+      setHoot(hootData);
+    };
+    fetchHoot(); //this will run when the effect function runs
+  }, [hootId]); //this happens anytime the hoodId changes
+
+  console.log("hoot state: ", hoot);
+  if (!hoot) return <main>Loading...</main>; //show loading while Hoot is getting requested
+  return (
+    <main>
+      <section>
+        <header>
+          <p>{hoot.category.toUpperCase()}</p>
+          <h1>{hoot.title}</h1>
+          <p>
+            {`${hoot.author.username} posted on
+            ${new Date(hoot.createdAt).toLocaleDateString()}`}
+          </p>
+        </header>
+        <p>{hoot.text}</p>
+      </section>
+      <section>
+        <h2>Comments</h2>
+      </section>
+    </main>
+  );
+};
+
+export default HootDetails;

@@ -11,4 +11,17 @@ const index = async () => {
   }
 };
 
-export { index }; //named export syntax used to export multiple functions from a module
+// src/services/hootService.js
+
+const show = async (hootId) => {
+  try {
+    const res = await fetch(`${BASE_URL}/${hootId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+    return res.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { index, show }; //named export syntax used to export multiple functions from a module

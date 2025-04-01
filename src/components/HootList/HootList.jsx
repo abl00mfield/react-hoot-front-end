@@ -1,6 +1,5 @@
 // src/components/HootList/HootList.jsx
 import { Link } from "react-router";
-import HootDetails from "../HootDetails/HootDetails";
 
 const HootList = (props) => {
   return (
