@@ -16,7 +16,11 @@ const HootDetails = (props) => {
   }, [hootId]); //this happens anytime the hoodId changes
 
   const handleAddComment = async (commentFormData) => {
-    console.log("Comment Form Data: ", commentFormData);
+    const newComment = await hootService.createComment(hootId, commentFormData);
+    setHoot({
+      ...hoot,
+      comments: [...hoot.comments, newComment],
+    });
   };
 
   if (!hoot) return <main>Loading...</main>; //show loading while Hoot is getting requested
