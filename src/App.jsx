@@ -10,6 +10,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import HootList from "./components/HootList/HootList";
 import HootDetails from "./components/HootDetails/HootDetails";
 import HootForm from "./components/HootForm/HootForm";
+import CommentForm from "./components/CommentForm/CommentForm";
 
 import { UserContext } from "./contexts/UserContext";
 
@@ -67,6 +68,10 @@ const App = () => {
             <Route
               path="/hoots/:hootId/edit"
               element={<HootForm handleUpdateHoot={handleUpdateHoot} />}
+            />
+            <Route
+              path="/hoots/:hootId/comments/:commentId"
+              element={<CommentForm />}
             />
           </>
         ) : (

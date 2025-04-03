@@ -56,6 +56,21 @@ const createComment = async (hootId, commentFormData) => {
   }
 };
 
+const deleteComment = async (hootId, commentId) => {
+  try {
+    const res = await fetch(`${BASE_URL}/${hootId}/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-type": "applicaiton/json",
+      },
+    });
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const deleteHoot = async (hootId) => {
   try {
     const res = await fetch(`${BASE_URL}/${hootId}`, {
@@ -86,4 +101,29 @@ const updateHoot = async (hootId, hootFormData) => {
   }
 };
 
-export { index, show, create, createComment, deleteHoot, updateHoot }; //named export syntax used to export multiple functions from a module
+const updateComment = async (hootId, commentId, commentFormData) => {
+  try {
+    const res = await fetch(`${BASE_URL}/${hootId}/comments/${commentId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(commentFormData),
+    });
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  index,
+  show,
+  create,
+  createComment,
+  deleteHoot,
+  updateHoot,
+  deleteComment,
+  updateComment,
+}; //named export syntax used to export multiple functions from a module
